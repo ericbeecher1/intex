@@ -1,0 +1,48 @@
+<%inherit file="/homepage/templates/base.htm" />
+
+
+
+
+<%block name="main_content">
+<!-- BEGIN: CONTENT -->
+<section class="page-title bg-image bg-overlay d-lg-block d-md-block d-sm-none d-none" style="height: 300px; background-image: url(${ STATIC_URL }account/media/doctor-arms.jpg); background-repeat: no-repeat;  background-size: cover; background-position: center -160px;">
+  <div class="overlay">
+    <div class="container">
+      <h1 class="text-right">Login</h1>
+    </div>
+  </div>
+</section>
+<section class="d-lg-none d-md-none d-sm-block d-xs-block" style="height: 180px; background-image: url(${ STATIC_URL }account/media/doctor-arms.jpg); background-repeat: no-repeat; background-position: top;  background-size: cover;">
+  <div class="overlay">
+    <div class="container">
+      <h1 class="text-right" style="color: #fff">Login</h1>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="row">
+    <div class="col-12 col-lg-4 offset-lg-4">
+      <div class="well">
+        <div class="inlay-form-labels">
+          <h4 class="text-secondary">
+          Login
+          </h4>
+          <div class="oak_contact_form_wrapper">
+            <div class="oak_contact_above_form">
+            </div>
+            <form method="post" class="oak_contact_form">
+                ${ csrf_input }
+                ${ form.as_p()}
+                <button class="btn btn-primary btn-block" type="submit">Submit</button>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+</%block>

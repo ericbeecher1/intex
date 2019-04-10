@@ -1,0 +1,97 @@
+<%inherit file="/homepage/templates/base.htm" />
+
+<%block name="main_content">
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            ${message | n}
+            <h2 class="text-secondary pb-2">Prescribers</h2>
+            <div class="dataTables_wrapper">
+
+              <table class="datatable table table-striped table-bordered no-footer">
+                <thead>
+                  <tr>
+                    <th class="nosort" style="width: 30px">
+
+                    </th>
+                    %if request.user.has_perm('perscriptions.can_see_names') :
+                      <th>
+                        Name
+                      </th>
+                    %else:
+                      <th>
+                        Doctor ID
+                      </th>
+                    %endif
+                    <th>
+                      Location
+                    </th>
+                    <th>
+                      Credentials
+                    </th>
+                    <th>
+                      Specialty
+                    </th>
+
+                    <th class="nosort" style="text-align: center">
+                      Actions
+                    </th>
+                  </tr>
+
+                </thead>
+                <tbody>
+                  %for prescriber in prescribers:
+                    <tr>
+                      <td class="text-center">
+
+                      </td>
+                      %if request.user.has_perm('perscriptions.can_see_names') :
+                        <td>
+                          <a href="/perscriptions/prescribers.view/${prescriber.id}">${prescriber.Fname} ${prescriber.Lname}</a>
+                        </td>
+                      %else:
+                        <td>
+                          <a href="/perscriptions/prescribers.view/${prescriber.id}">${prescriber.DoctorID}</a>
+                        </td>
+                      %endif
+                      <td>
+                        ${prescriber.State}</a>
+                      </td>
+                      <td>
+                        ${prescriber.Credentials}</a>
+                      </td>
+                      <td>
+                        ${prescriber.Specialty}</a>
+                      </td>
+                      <td class="text-center">
+                        <a href="/perscriptions/prescribers.view/${prescriber.id}" class="btn btn-light btn-sm"><i class="fas fa-eye"></i></a>
+                        %if request.user.has_perm('perscriptions.can_crud') :
+                          <a href="/perscriptions/prescribers.edit/${prescriber.id}" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
+                          <a href="/perscriptions/prescribers.delete/${prescriber.id}" onclick="confirm('Are you sure? This cannot be undone')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                        %endif
+                      </td>
+                    </tr>
+
+                  %endfor
+                </tbody>
+              </table>
+              <div class="row">
+                <div class="col-sm-12 col-md-5">
+                  <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing ${start} to ${end} of ${total} entries</div>
+                </div>
+                <div class="col-sm-12 col-md-7">
+                  <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                    <ul class="pagination">
+                      ${pagination | n}
+                      </ul>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+</%block>

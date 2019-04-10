@@ -1,0 +1,44 @@
+<%inherit file="/homepage/templates/base.htm" />
+<%block name="page_title">Add Perscription for: ${prescriber.Fname} ${prescriber.Lname}</%block>
+<%block name="main_content">
+    <section>
+      <div class="container">
+        <div class="row">
+        <div class="col-12">
+          <h1 class="border-bottom mb-4 pb-1" style="border-bottom-style: dotted!important;">
+              Add Perscription for: ${prescriber.Fname} ${prescriber.Lname}}
+          </h1>
+        </div>
+
+          <div class="col-12">
+            <div class="well">
+              <form class="oak_contact_form" method="post">
+                ${ csrf_input }
+                <div class="row">
+                  <div class="col-lg-6 col-12 form-group">
+                    <label>Perscriber</label>
+                    <h5>
+                      ${prescriber.Fname} ${prescriber.Lname}
+                    </h5>
+                  </div>
+                    %for field in form.visible_fields():
+                        <div class="col-lg-6 col-12 form-group">
+                        <label>${ field.label }</label>
+                            ${ field }
+                        </div>
+                    %endfor
+                    <div class="col-12 text-center col-lg-4 offset-lg-4">
+                      <button class="btn btn-primary btn-block" type="submit">Update</button>
+                    </div>
+
+
+                </div>
+              </form>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </section>
+</%block>

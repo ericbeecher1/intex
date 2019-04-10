@@ -1,0 +1,145 @@
+<%inherit file="/homepage/templates/base.htm" />
+<%block name="page_title">Search Results</%block>
+<%block name="main_content">
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-12 mb-4">
+            <form method="post">
+              ${ csrf_input }
+              <div class="input-group">
+                <input type="text" class="form-control" name="search_term" placeholder="New Search" aria-label="New Search" aria-describedby="basic-addon2" value="${search_term}">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit" type="button"><i class="fas fa-search"></i></button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-12">
+            <ul class="nav nav-tabs mb-3">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" role="tab" href="#drug_results">Drugs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" role="tab" href="#prescriber_results">Perscribers</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-12">
+            <div class="tab-content w-100" id="myTabContent">
+              <div class="tab-pane fade active show" id="drug_results" role="tabpanel" aria-labelledby="profile-tab">
+              <table class="datatable table table-striped table-bordered no-footer">
+                <thead>
+                  <tr>
+                    <th class="nosort" style="width: 30px">
+
+                    </th>
+                    <th>
+                      Drug Name
+                    </th>
+                    <th class="nosort" style="text-align: center">
+                      Action
+                    </th>
+                  </tr>
+
+                </thead>
+                <tbody>
+                  %for drug in drug_results:
+                    <tr>
+                      <td class="text-center">
+                        %if drug.isOpioid:
+                          <i class="fas fa-capsules" data-toggle="tooltip" title="${drug.DrugName.capitalize()} is an Opioid"></i>
+                        %endif
+                      </td>
+                      <td class="text-capitalize">
+                        <a href="/perscriptions/drugs.details/${drug.id}">${drug.DrugName.lower()}</a>
+                      </td>
+                      <td class="actions_cell">
+                        <a href="/perscriptions/drugs.details/${drug.id}" class="btn btn-light btn-sm"><i class="fas fa-eye"></i></a>
+                      </td>
+                    </tr>
+
+                  %endfor
+                </tbody>
+              </table>
+
+              </div>
+              <div class="tab-pane fade" id="prescriber_results" role="tabpanel" aria-labelledby="contact-tab">
+                <table class="datatable table table-striped table-bordered no-footer">
+                  <thead>
+                    <tr>
+                      <th class="nosort" style="width: 30px">
+
+                      </th>
+                      %if request.user.has_perm('perscriptions.can_see_names') :
+                        <th>
+                          Name
+                        </th>
+                      %else:
+                        <th>
+                          Doctor ID
+                        </th>
+                      %endif
+                      <th>
+                        Location
+                      </th>
+                      <th>
+                        Credentials
+                      </th>
+                      <th>
+                        Specialty
+                      </th>
+
+                      <th class="nosort" style="text-align: center">
+                        Actions
+                      </th>
+                    </tr>
+
+                  </thead>
+                  <tbody>
+                    %for prescriber in prescriber_results:
+                      <tr>
+                        <td class="text-center">
+
+                        </td>
+                        %if request.user.has_perm('perscriptions.can_see_names') :
+                          <td>
+                            <a href="/perscriptions/prescribers.view/${prescriber.id}">${prescriber.Fname} ${prescriber.Lname}</a>
+                          </td>
+                        %else:
+                          <td>
+                            <a href="/perscriptions/prescribers.view/${prescriber.id}">${prescriber.DoctorID}</a>
+                          </td>
+                        %endif
+                        <td>
+                          ${prescriber.State}</a>
+                        </td>
+                        <td>
+                          ${prescriber.Credentials}</a>
+                        </td>
+                        <td>
+                          ${prescriber.Specialty}</a>
+                        </td>
+                        <td class="text-center">
+                          <a href="/perscriptions/prescribers.view/${prescriber.id}" class="btn btn-light btn-sm"><i class="fas fa-eye"></i></a>
+                          %if request.user.has_perm('perscriptions.can_crud') :
+                            <a href="/perscriptions/prescribers.edit/${prescriber.id}" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
+                            <a href="/perscriptions/prescribers.delete/${prescriber.id}" onclick="confirm('Are you sure? This cannot be undone')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                          %endif
+                        </td>
+                      </tr>
+
+                    %endfor
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+
+          </div>
+
+      </div>
+    </section>
+</%block>

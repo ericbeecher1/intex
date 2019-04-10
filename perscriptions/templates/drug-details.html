@@ -1,0 +1,90 @@
+<%inherit file="/homepage/templates/base.htm" />
+
+<%block name="main_content">
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h1 class="border-bottom mb-4 pb-1" style="border-bottom-style: dotted!important;">  ${drug.DrugName.capitalize()}</h1>
+          </div>
+          <div class="col-12 col-lg-4">
+            <h3>Drug Details</h3>
+            <div class="well">
+              <div class="row p-2 border-bottom" style="border-bottom-style: dotted !important;">
+                <div class="col-4 text-right">
+                  Name:
+                </div>
+                <div class="col-8">
+                  ${drug.DrugName.capitalize()}
+                </div>
+              </div>
+              <div class="row p-2">
+                <div class="col-4 text-right">
+                  Is Opioid:
+                </div>
+                <div class="col-8">
+                  %if drug.isOpioid:
+                    Yes
+                  %else:
+                    No
+                  %endif
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-8">
+            <h3>${drug.DrugName.capitalize()} Top Prescribers</h3>
+            <table class="datatable table table-striped table-bordered no-footer box-shadow">
+              <thead>
+                <tr>
+                  <th class="nosort" style="width: 30px; text-align:center">
+                    # Prescribed
+                  </th>
+                  %if request.user.has_perm('perscriptions.can_see_names') :
+                    <th>
+                      Name
+                    </th>
+                  %else:
+                    <th>
+                      Doctor Id
+                    </th>
+                  %endif
+                  <th>
+                    Location
+                  </th>
+                  <th>
+                    Specialty
+                  </th>
+                </tr>
+
+              </thead>
+              <tbody>
+                %for prescription in drug.get_top_prescriptions():
+                  <tr>
+                    <td class="text-center">
+                      ${prescription.QuanityPerscribed}
+                    </td>
+                    <td class="text-capitalize">
+                    %if request.user.has_perm('perscriptions.can_see_names') :
+                      <a href="/perscriptions/prescribers.view/${prescription.Prescriber.id}">${prescription.Prescriber.Fname} ${prescription.Prescriber.Lname}</a>
+                    %else:
+                      <a href="/perscriptions/prescribers.view/${prescription.Prescriber.id}">${prescription.Prescriber.DoctorID}</a>
+                    %endif
+                    </td>
+
+                    <td>
+                      ${prescription.Prescriber.State}
+                    </td>
+                    <td>
+                      ${prescription.Prescriber.Specialty}
+                    </td>
+                  </tr>
+
+                %endfor
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+</%block>

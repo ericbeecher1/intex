@@ -1,0 +1,133 @@
+<%inherit file="/homepage/templates/base.htm" />
+
+<%block name="main_content">
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h1 class="border-bottom mb-4 pb-1" style="border-bottom-style: dotted!important;">
+              %if request.user.has_perm('perscriptions.can_see_names') :
+                ${prescriber.Fname} ${prescriber.Lname}
+              %else:
+                Prescriber #${prescriber.DoctorID}
+              %endif
+            </h1>
+          </div>
+          <div class="col-12 col-lg-4">
+            <h3>Prescriber Details</h3>
+            <div class="well">
+              <div class="row p-2 border-bottom" style="border-bottom-style: dotted !important;">
+                <div class="col-4 text-right">
+                  Doctor ID:
+                </div>
+                <div class="col-8">
+                  ${prescriber.DoctorID}
+                </div>
+              </div>
+              %if request.user.has_perm('perscriptions.can_see_names') :
+                <div class="row p-2 border-bottom" style="border-bottom-style: dotted !important;">
+                  <div class="col-4 text-right">
+                    Name:
+                  </div>
+                  <div class="col-8">
+                    ${prescriber.Fname} ${prescriber.Lname}
+                  </div>
+                </div>
+              %endif
+              <div class="row p-2 border-bottom" style="border-bottom-style: dotted !important;">
+                <div class="col-4 text-right">
+                  Gender:
+                </div>
+                <div class="col-8">
+                  ${prescriber.Gender}
+                </div>
+              </div>
+              <div class="row p-2 border-bottom" style="border-bottom-style: dotted !important;">
+                <div class="col-4 text-right">
+                  Location:
+                </div>
+                <div class="col-8">
+                  ${prescriber.State}
+                </div>
+              </div>
+              <div class="row p-2 border-bottom" style="border-bottom-style: dotted !important;">
+                <div class="col-4 text-right">
+                  Credentials:
+                </div>
+                <div class="col-8">
+                  ${prescriber.Credentials}
+                </div>
+              </div>
+              <div class="row p-2 border-bottom" style="border-bottom-style: dotted !important;">
+                <div class="col-4 text-right">
+                  Specialty:
+                </div>
+                <div class="col-8">
+                  ${prescriber.Specialty}
+                </div>
+                <div class="row p-2">
+                  <div class="col-6 text-right">
+                    Total Prescriptions:
+                  </div>
+                  <div class="col-6 align-self-center">
+                    ${prescriber.TotalPrescriptions}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-8">
+            <h3> Drugs Prescribed</h3>
+            <table class="datatable table table-striped table-bordered no-footer box-shadow">
+              <thead>
+                <tr>
+                <th class="nosort" style="width: 30px; text-align:center">
+
+                </th>
+                  <th>
+                    Name
+                  </th>
+                  <th class="text-center">
+                    Percentage of Perscriptions
+                  </th>
+                  <th class="text-center">
+                    # Prescribed
+                  </th>
+                  <th class="text-center">
+                    Average Prescribed
+                  </th>
+                </tr>
+
+              </thead>
+              <tbody>
+
+                %for prescription in prescriber.get_drugs_perscribed():
+                  <tr>
+                    <td class="text-center">
+                      %if prescription.Drug.isOpioid:
+                        <i class="fas fa-capsules" data-toggle="tooltip" title="${prescription.Drug.DrugName.capitalize()} is an Opioid"></i>
+                      %endif
+                    </td>
+                    </td>
+                    <td>
+                      <a href="/perscriptions/drugs.details/${prescription.Drug.id}">${prescription.Drug.DrugName.capitalize()}</a>
+                    </td>
+                    <td class="text-center">
+                      ${round(prescription.QuanityPerscribed / int(prescriber.TotalPrescriptions)* 100, 1) }%
+                    </td>
+                    <td class="text-center">
+                      ${prescription.QuanityPerscribed}
+                    </td>
+                    <td class="text-center">
+                      ${prescription.Drug.get_average_perscribed()}
+                    </td>
+                  </tr>
+
+                %endfor
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+</%block>

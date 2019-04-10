@@ -1,0 +1,93 @@
+<%inherit file="/homepage/templates/base.htm" />
+<%block name="page_title">Edit: ${prescriber.Fname} ${prescriber.Lname}</%block>
+<%block name="main_content">
+    <section>
+      <div class="container">
+        <div class="row">
+        <div class="col-12">
+          ${message | n}
+          <h1 class="border-bottom mb-4 pb-1" style="border-bottom-style: dotted!important;">
+              ${prescriber.Fname} ${prescriber.Lname}
+          </h1>
+        </div>
+
+          <div class="col-6">
+
+            <h3> Edit Details</h3>
+            <div class="well">
+              <form class="oak_contact_form" method="post">
+                ${ csrf_input }
+                <div class="row">
+
+                    %for field in form.visible_fields():
+                        <div class="col-lg-6 col-12 form-group">
+                        <label>${ field.label }</label>
+                            ${ field }
+                        </div>
+                    %endfor
+                    <div class="col-12 text-center col-lg-6 offset-lg-3">
+                      <button class="btn btn-primary btn-block" type="submit">Update ${prescriber.Fname} ${prescriber.Lname}</button>
+                    </div>
+
+
+                </div>
+              </form>
+            </div>
+
+
+          </div>
+          <div class="col-12 col-lg-6">
+            <h3> Edit Drugs Prescribed</h3>
+            <table class="datatable table table-striped table-bordered no-footer box-shadow">
+              <thead>
+                <tr>
+                <th class="nosort" style="width: 30px; text-align:center">
+
+                </th>
+                  <th>
+                    Name
+                  </th>
+                  <th class="text-center">
+                    # Prescribed
+                  </th>
+                  <th class="text-center">
+                    Actions
+                  </th>
+                </tr>
+
+              </thead>
+              <tbody>
+
+                %for prescription in prescriber.get_drugs_perscribed():
+                  <tr>
+                    <td class="text-center">
+                      %if prescription.Drug.isOpioid:
+                        <i class="fas fa-capsules" data-toggle="tooltip" title="${prescription.Drug.DrugName.capitalize()} is an Opioid"></i>
+                      %endif
+                    </td>
+                    <td>
+                      <a href="/perscriptions/prescriptions.edit/${prescription.id}">${prescription.Drug.DrugName.capitalize()}</a>
+                    </td>
+                    <td class="text-center">
+                      ${prescription.QuanityPerscribed}
+                    </td>
+                    <td class="text-center">
+                      <a href="/perscriptions/prescriptions.edit/${prescription.id}" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
+                      <a href="/perscriptions/prescriptions.delete/${prescription.id}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                    </td>
+                  </tr>
+                %endfor
+              </tbody>
+            </table>
+
+            <div class="row">
+              <div class="col-lg-6 col-12 offset-lg-3">
+                <a href="/perscriptions/prescriptions.add/${prescriber.id}" class="btn btn-primary btn-block">Add A Perscription for ${prescriber.Fname} ${prescriber.Lname}</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+</%block>

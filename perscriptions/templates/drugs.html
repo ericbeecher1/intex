@@ -1,0 +1,47 @@
+<%inherit file="/homepage/templates/base.htm" />
+
+<%block name="main_content">
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="text-secondary pb-2">Drugs</h2>
+            <table class="datatable table table-striped table-bordered no-footer">
+              <thead>
+                <tr>
+                  <th class="nosort" style="width: 30px">
+
+                  </th>
+                  <th>
+                    Drug Name
+                  </th>
+                  <th class="nosort" style="text-align: center">
+                    Action
+                  </th>
+                </tr>
+
+              </thead>
+              <tbody>
+                %for drug in drugs:
+                  <tr>
+                    <td class="text-center">
+                      %if drug.isOpioid:
+                        <i class="fas fa-capsules" data-toggle="tooltip" title="${drug.DrugName.capitalize()} is an Opioid"></i>
+                      %endif
+                    </td>
+                    <td class="text-capitalize">
+                      <a href="/perscriptions/drugs.details/${drug.id}">${drug.DrugName.lower()}</a>
+                    </td>
+                    <td class="actions_cell">
+                      <a href="/perscriptions/drugs.details/${drug.id}" class="btn btn-light btn-sm"><i class="fas fa-eye"></i></a>
+                    </td>
+                  </tr>
+
+                %endfor
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+</%block>

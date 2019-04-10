@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    		<title><%block name="page_title"></%block></title>
+
+        <link rel="shortcut icon" href="${ STATIC_URL }homepage/media/python.png">
+
+        <!-- REQ: Bootstrap 4.x -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-6jHF7Z3XI3fF4XZixAuSu0gGKrXwoX/w3uFPxC56OtjChio7wtTGJWRW53Nhx6Ev" crossorigin="anonymous">
+
+        <!-- REQ: Jquery 3.3.x -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+        <!-- REQ: Bootstrap 4.x -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+
+
+        <script src="/django_mako_plus/dmp-common.min.js"></script>
+        ${ django_mako_plus.links(self) }
+
+
+
+
+
+	</head>
+
+	<body class="h-dark h-solid h-sticky h-nav-content-bottom h-show-icon-group">
+
+        <header>
+            <!-- header -->
+            <div class="container header-container">
+
+                <div class="header-search row">
+                    <form action="/perscriptions/search" method="post">
+                      ${ csrf_input }
+                        <div class="row justify-content-center">
+
+                            <div class="col-5">
+                                <input type="text" name="search_term" class="form-control" value="" placeholder="Type and press enter">
+                            </div>
+                            <div class="col-2">
+                                <a href="#" class="submit-header-search"><span class="fas fa-chevron-circle-right"></span></a>
+                                <a href="#" class="toggle-header-search text-danger"><span class="fas fa-window-close"></span></a>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+                <div class="logo"><a href="/"><img src="${ STATIC_URL }homepage/media/python.png"  /></a></div>
+                <div class="mobile-logo"><a href="/"><img src="${ STATIC_URL }homepage/media/python.png" /></a></div>
+
+                <div class="mobile-icon-group">
+                    <a href=""><span class="fas fa-search"></span></a>
+                    <a class="on-open-only" href="/"><span class="fas fa-home"></span></a>
+                </div>
+                <div class="mobile-nav-trigger"><span class="close-icon fas fa-window-close"></span><span class="open-icon fas fa-bars"></span></div>
+
+                <div class="icon-group">
+                % if request.user.is_authenticated :
+                  <a class="toggle-header-search" href="" data-toggle="tooltip" title="Search"><span class="fas fa-search"></span></a>
+                  <a class="text-secondary" target="_blank" href="/account/logout" data-toggle="tooltip" title="Logout"><span class="fas fa-sign-out-alt"></span></a>
+                % else :
+                  <a class="text-secondary" target="_blank" href="/account/" data-toggle="tooltip" title="Login"><span class="fas fa-sign-in-alt"></span></a>
+                % endif
+                </div>
+
+                <nav role="navigation">
+                  % if request.user.is_authenticated :
+                    <ul class="level-1 " style="">
+                      <li><a href="/perscriptions/drugs">Drugs</a></li>
+                      <li class="flyout">
+                        <a href="/perscriptions/prescribers" class="parent">Prescribers
+                          %if request.user.has_perm('perscriptions.can_see_names') :
+                          <i class="carrot fas fa-angle-down"></i>
+                          %endif
+                        </a>
+                        %if request.user.has_perm('perscriptions.can_see_names') :
+                        <ul class="level-2 row no-gutters list-unstyled" style="z-index: 100; display: none;">
+                          <li class=""><a href="/perscriptions/prescribers.add" class="">Add New Prescriber</a></li>
+                        </ul>
+                        %endif
+                      </li>
+                    </ul>
+                  % endif
+
+                </nav>
+
+            </div>
+
+            <div class="clearfix"></div>
+        </header>
+
+        <main>
+            <%block name="main_content">
+
+            </%block>
+            <!-- END: CONTENT -->
+        </main>
+
+        <footer>
+            <section class="bg-dark-2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 text-center" style="color: #fff; opacity: .5; font-size: 80%;">&copy; Copyright 2019 Wells Institute. ALL RIGHTS RESERVED.</div>
+                    </div>
+                </div>
+            </section>
+        </footer>
+    </body>
+</html>
