@@ -34,15 +34,15 @@ def process_request(request):
                     login(request, user);
                     request.session['message'] = ''
 
-                    try:
-                        request.GET.dict().get('next')
-                    except:
+                    if request.GET.dict().get('next') is not None :
+                        return HttpResponseRedirect(request.GET.dict().get('next'))
+                    else:
                         if user.has_perm('perscriptions.can_crud') :
                             return HttpResponseRedirect('/perscriptions/drugs/')
                         else :
                             return HttpResponseRedirect('/perscriptions/')
-                    else :
-                        return HttpResponseRedirect(request.GET.dict().get('next'))
+                
+
 
 
 
