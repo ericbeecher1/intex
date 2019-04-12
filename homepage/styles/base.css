@@ -10,7 +10,7 @@
 
         Secondary color
 
-                hex: #f3255c
+                hex: #ff0044
                 rgb: rgb(244, 37, 92)
 
         Tertiary color
@@ -73,7 +73,7 @@
 
     /* .text- */
     .text-primary { color: #25BDF3 !important; }
-    .text-secondary { color: #f3255c !important; }
+    .text-secondary { color: #ff0044 !important; }
         a.text-secondary:hover { color: #e71049 !important; }
 
     .text-shadow { text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); }
@@ -81,7 +81,7 @@
 
     /* .badge- */
     .badge-primary { background-color: #25BDF3; }
-    .badge-secondary { background-color: #f3255c; }
+    .badge-secondary { background-color: #ff0044; }
 
 
 
@@ -317,8 +317,8 @@
         /* .btn-secondary */
         .btn-secondary
         {
-            background-color: #f3255c;
-            border-color: #f3255c;
+            background-color: #ff0044;
+            border-color: #ff0044;
         }
             .btn-secondary:hover,
             .btn-secondary:not(:disabled):not(.disabled).active,
@@ -326,8 +326,8 @@
             .show > .btn-secondary.dropdown-toggle
             {
                 color: #fff;
-                background-color: #f3255c;
-                border-color: #f3255c;
+                background-color: #ff0044;
+                border-color: #ff0044;
                 box-shadow: 0 0 0 0.2rem rgba(244, 37, 92, .5);
             }
 
@@ -340,8 +340,8 @@
         /* .btn-outline-secondary */
         .btn-outline-secondary
         {
-            color: #f3255c;
-            border-color: #f3255c;
+            color: #ff0044;
+            border-color: #ff0044;
         }
             .btn-outline-secondary:hover,
             .btn-outline-secondary:not(:disabled):not(.disabled).active,
@@ -349,8 +349,8 @@
             .show > .btn-outline-secondary.dropdown-toggle
             {
                 color: #fff;
-                background-color: #f3255c;
-                border-color: #f3255c;
+                background-color: #ff0044;
+                border-color: #ff0044;
                 box-shadow: 0 0 0 0.2rem rgba(244, 37, 92, .5);
             }
 
@@ -714,7 +714,7 @@ header
         header .logo
         {
             display: block;
-            padding: 25px 0; /* header height */
+            padding: 5px 0; /* header height */
             float: left;
 
             -webkit-transition: all 0.3s ease-in;
@@ -723,7 +723,7 @@ header
         }
             header .logo img
             {
-                height: 40px; /* header height */
+                height: 80px; /* header height */
 
                 -webkit-transition: all 0.3s ease-in;
         		-o-transition: all 0.3s ease-in;
@@ -884,7 +884,7 @@ header
                 }
                     body.h-dark header div.top-bar div.tert-nav ul li a:hover
                     {
-                        color: #f3255c;
+                        color: #ff0044;
                     }
 
         } /* end media query lg */
@@ -1041,8 +1041,8 @@ header
         }
 
             /* logo */
-            body.h-sticky header.scrolled .logo { padding: 10px 0; }  /* header height */
-            body.h-sticky header.scrolled .logo img { height: 30px; }  /* header height */
+            body.h-sticky header.scrolled .logo { padding: 5px 0; }  /* header height */
+            body.h-sticky header.scrolled .logo img { height: 40px; }  /* header height */
 
             body.h-sticky header.scrolled .icon-group a { height: 50px; }  /* header height */
 
@@ -1789,7 +1789,7 @@ section
                 background: -moz-linear-gradient(top, rgba(244, 37, 92, 0.62) 0%, rgba(244, 37, 92, 0.48) 48%, rgba(244, 37, 92, 0.57) 100%);
                 background: -webkit-linear-gradient(top, rgba(244, 37, 92, 0.62) 0%,rgba(244, 37, 92, 0.48) 48%,rgba(244, 37, 92, 0.57) 100%);
                 background: linear-gradient(to bottom, rgba(244, 37, 92, 0.62) 0%,rgba(244, 37, 92, 0.48) 48%,rgba(244, 37, 92, 0.57) 100%);
-                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9ef3255c', endColorstr='#91f3255c',GradientType=0 );
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9eff0044', endColorstr='#91ff0044',GradientType=0 );
             }
 
         /* overlay view hieght fixes */

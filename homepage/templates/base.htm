@@ -8,14 +8,14 @@
 
     		<title><%block name="page_title"></%block></title>
 
-        <link rel="shortcut icon" href="${ STATIC_URL }homepage/media/python.png">
+        <link rel="shortcut icon" href="${ STATIC_URL }homepage/media/Intex2LogoWhite.png">
 
         <!-- REQ: Bootstrap 4.x -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
 
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-6jHF7Z3XI3fF4XZixAuSu0gGKrXwoX/w3uFPxC56OtjChio7wtTGJWRW53Nhx6Ev" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
         <!-- REQ: Jquery 3.3.x -->
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -41,7 +41,16 @@
 	</head>
 
 	<body class="h-dark h-solid h-sticky h-nav-content-bottom h-show-icon-group">
+        <%
+          if request.user.is_authenticated :
+            if request.user.has_perm('perscriptions.can_crud') :
+              home_url = '/perscriptions/drugs'
+            else :
+              home_url = '/perscriptions/'
+          else:
+            home_url = '/account/'
 
+        %>
         <header>
             <!-- header -->
             <div class="container header-container">
@@ -63,12 +72,12 @@
                     </form>
                 </div>
 
-                <div class="logo"><a href="/"><img src="${ STATIC_URL }homepage/media/python.png"  /></a></div>
-                <div class="mobile-logo"><a href="/"><img src="${ STATIC_URL }homepage/media/python.png" /></a></div>
+                <div class="logo"><a href="${home_url}"><img src="${ STATIC_URL }homepage/media/Intex2LogoWhite.png"  /></a></div>
+                <div class="mobile-logo"><a href="${home_url}"><img src="${ STATIC_URL }homepage/media/Intex2LogoWhite.png" /></a></div>
 
                 <div class="mobile-icon-group">
                     <a href=""><span class="fas fa-search"></span></a>
-                    <a class="on-open-only" href="/"><span class="fas fa-home"></span></a>
+                    <a class="on-open-only" href="${home_url}"><span class="fas fa-home"></span></a>
                 </div>
                 <div class="mobile-nav-trigger"><span class="close-icon fas fa-window-close"></span><span class="open-icon fas fa-bars"></span></div>
 
@@ -87,11 +96,11 @@
                       <li><a href="/perscriptions/drugs">Drugs</a></li>
                       <li class="flyout">
                         <a href="/perscriptions/prescribers" class="parent">Prescribers
-                          %if request.user.has_perm('perscriptions.can_see_names') :
+                          %if request.user.has_perm('perscriptions.can_crud') :
                           <i class="carrot fas fa-angle-down"></i>
                           %endif
                         </a>
-                        %if request.user.has_perm('perscriptions.can_see_names') :
+                        %if request.user.has_perm('perscriptions.can_crud') :
                         <ul class="level-2 row no-gutters list-unstyled" style="z-index: 100; display: none;">
                           <li class=""><a href="/perscriptions/prescribers.add" class="">Add New Prescriber</a></li>
                         </ul>

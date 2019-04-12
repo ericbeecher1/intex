@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1554906506.724716
+_modified_time = 1554939717.833339
 _enable_loop = True
 _template_filename = '/Users/ericbeecher1/intex/perscriptions/templates/prescription-edit.html'
 _template_uri = 'prescription-edit.html'
@@ -30,14 +30,14 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
-        def main_content():
-            return render_main_content(context._locals(__M_locals))
+        prescription = context.get('prescription', UNDEFINED)
         csrf_input = context.get('csrf_input', UNDEFINED)
         self = context.get('self', UNDEFINED)
         form = context.get('form', UNDEFINED)
         def page_title():
             return render_page_title(context._locals(__M_locals))
-        prescription = context.get('prescription', UNDEFINED)
+        def main_content():
+            return render_main_content(context._locals(__M_locals))
         message = context.get('message', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n')
@@ -59,10 +59,10 @@ def render_body(context,**pageargs):
 def render_page_title(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        def page_title():
-            return render_page_title(context)
         prescription = context.get('prescription', UNDEFINED)
         self = context.get('self', UNDEFINED)
+        def page_title():
+            return render_page_title(context)
         __M_writer = context.writer()
         __M_writer('Edit: ')
         __M_writer(django_mako_plus.ExpressionPostProcessor(self)(prescription.Prescriber.Fname))
@@ -76,12 +76,12 @@ def render_page_title(context,**pageargs):
 def render_main_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
+        prescription = context.get('prescription', UNDEFINED)
         csrf_input = context.get('csrf_input', UNDEFINED)
-        def main_content():
-            return render_main_content(context)
         self = context.get('self', UNDEFINED)
         form = context.get('form', UNDEFINED)
-        prescription = context.get('prescription', UNDEFINED)
+        def main_content():
+            return render_main_content(context)
         message = context.get('message', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n    <section>\n      <div class="container">\n        <div class="row">\n        <div class="col-12">\n          <h1 class="border-bottom mb-4 pb-1" style="border-bottom-style: dotted!important;">\n              ')

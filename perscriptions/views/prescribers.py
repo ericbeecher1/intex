@@ -2,10 +2,10 @@ from django.conf import settings
 from django_mako_plus import view_function, jscontext
 from perscriptions import models as pmod
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 
-
-
+@login_required(login_url='/account/')
 @view_function
 def process_request(request, page:int=1):
     page_length = 10
@@ -100,73 +100,89 @@ def process_request(request, page:int=1):
     }
     return request.dmp.render('prescribers.html', context)
 
+@login_required(login_url='/account/')
 @view_function
 def view(request, prescriber:pmod.Prescriber=None):
-    context = {
-        'prescriber': prescriber
-    }
-    return request.dmp.render('prescriber-view.html', context)
 
 
-@view_function
-def edit(request, prescriber:pmod.Prescriber=None):
-
-    try:
-      request.session['message']
-    except KeyError:
-      message = ''
-    else:
-      message = request.session['message']
-      request.session['message'] = ''
-
-    if request.method == 'POST':
-        form = pmod.PrescriberForm(request.POST, instance=prescriber)
-        if form.is_valid():
-            form.save()
-            request.session['message'] = '<div class="alert alert-success">That worked!</div>'
-            return HttpResponseRedirect('/perscriptions/prescribers.edit/'+str(prescriber.id))
-
-
-    else:
-        form = pmod.PrescriberForm(instance=prescriber)
+    similar_prescribers = prescriber.get_similar_prescribers()
 
     context = {
         'prescriber': prescriber,
-        'form': form,
-        'message': message
+        'similar_prescribers': similar_prescribers
     }
-    return request.dmp.render('prescriber-edit.html', context)
+    return request.dmp.render('prescriber-view.html', context)
 
+@login_required(login_url='/account/')
+@view_function
+def edit(request, prescriber:pmod.Prescriber=None):
+    if request.user.has_perm('perscriptions.can_crud') :
+        try:
+          request.session['message']
+        except KeyError:
+          message = ''
+        else:
+          message = request.session['message']
+          request.session['message'] = ''
+
+        if request.method == 'POST':
+            form = pmod.PrescriberForm(request.POST, instance=prescriber)
+            if form.is_valid():
+                form.save()
+                request.session['message'] = '<div class="alert alert-success">That worked!</div>'
+                return HttpResponseRedirect('/perscriptions/prescribers.edit/'+str(prescriber.id))
+
+
+        else:
+            form = pmod.PrescriberForm(instance=prescriber)
+
+        context = {
+            'prescriber': prescriber,
+            'form': form,
+            'message': message
+        }
+        return request.dmp.render('prescriber-edit.html', context)
+    else:
+        return HttpResponseRedirect('/perscriptions/prescribers/')
+
+@login_required(login_url='/account/')
 @view_function
 def add(request):
+    if request.user.has_perm('perscriptions.can_crud') :
 
-    if request.method == 'POST':
-        form = pmod.PrescriberForm(request.POST)
-        if form.is_valid():
-            form.save()
-            page_length = 10
-            total = pmod.Prescriber.objects.all().count()
-            remainder = total % page_length
-            if remainder == 0:
-                num_of_pages = total/page_length
-            else:
-                num_of_pages = ((total - remainder)/page_length) + 1
-            request.session['message'] = '<div class="alert alert-success">Look at your new Prescriber!</div>'
-            return HttpResponseRedirect('/perscriptions/prescribers/'+str(round(num_of_pages)))
+        if request.method == 'POST':
+            form = pmod.PrescriberForm(request.POST)
+            if form.is_valid():
+                form.save()
+                page_length = 10
+                total = pmod.Prescriber.objects.all().count()
+                remainder = total % page_length
+                if remainder == 0:
+                    num_of_pages = total/page_length
+                else:
+                    num_of_pages = ((total - remainder)/page_length) + 1
+                request.session['message'] = '<div class="alert alert-success">Look at your new Prescriber!</div>'
+                return HttpResponseRedirect('/perscriptions/prescribers/'+str(round(num_of_pages)))
 
 
-    else:
-        form = pmod.PrescriberForm()
+        else:
+            form = pmod.PrescriberForm()
 
-    context = {
-        'form': form,
-    }
-    return request.dmp.render('prescriber-add.html', context)
+        context = {
+            'form': form,
+        }
+        return request.dmp.render('prescriber-add.html', context)
+    else :
+        return HttpResponseRedirect('/perscriptions/prescribers/')
+
+@login_required(login_url='/account/')
 @view_function
 def delete(request, prescriber:pmod.Prescriber=None):
+    if request.user.has_perm('perscriptions.can_crud') :
+        if prescriber is not None:
+            prescriber.delete()
+            request.session['message'] = '<div class="alert alert-success">Prescriber Deleted</div>'
 
-    if prescriber is not None:
-        prescriber.delete()
-        request.session['message'] = '<div class="alert alert-success">Prescriber Deleted</div>'
-
-    return HttpResponseRedirect('/perscriptions/prescribers')
+        return HttpResponseRedirect('/perscriptions/prescribers')
+    else :
+        return HttpResponseRedirect('/perscriptions/prescribers/')

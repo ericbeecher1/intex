@@ -17,7 +17,10 @@ def process_request(request):
         password = forms.CharField(label = "Password", widget=forms.PasswordInput(attrs={'class': "form-control"}))
 
     if request.user.is_authenticated :
-        return HttpResponseRedirect('/perscriptions/')
+        if request.user.has_perm('perscriptions.can_crud') :
+            return HttpResponseRedirect('/perscriptions/drugs')
+        else:
+            return HttpResponseRedirect('/perscriptions/')
     else:
 
         if request.method == 'POST':
@@ -30,7 +33,18 @@ def process_request(request):
                 if user is not None:
                     login(request, user);
                     request.session['message'] = ''
-                    return HttpResponseRedirect('/perscriptions/drugs/')
+
+                    try:
+                        request.GET.dict().get('next')
+                    except:
+                        if user.has_perm('perscriptions.can_crud') :
+                            return HttpResponseRedirect('/perscriptions/drugs/')
+                        else :
+                            return HttpResponseRedirect('/perscriptions/')
+                    else :
+                        return HttpResponseRedirect(request.GET.dict().get('next'))
+
+
 
         else:
             form = NameForm()

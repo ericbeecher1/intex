@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1554908105.646952
+_modified_time = 1555026463.080916
 _enable_loop = True
 _template_filename = '/Users/ericbeecher1/intex/perscriptions/templates/prescription-add.html'
 _template_uri = 'prescription-add.html'
@@ -30,14 +30,14 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
-        form = context.get('form', UNDEFINED)
-        def page_title():
-            return render_page_title(context._locals(__M_locals))
-        prescriber = context.get('prescriber', UNDEFINED)
         def main_content():
             return render_main_content(context._locals(__M_locals))
-        csrf_input = context.get('csrf_input', UNDEFINED)
+        form = context.get('form', UNDEFINED)
         self = context.get('self', UNDEFINED)
+        prescriber = context.get('prescriber', UNDEFINED)
+        csrf_input = context.get('csrf_input', UNDEFINED)
+        def page_title():
+            return render_page_title(context._locals(__M_locals))
         __M_writer = context.writer()
         __M_writer('\n')
         if 'parent' not in context._data or not hasattr(context._data['parent'], 'page_title'):
@@ -75,18 +75,18 @@ def render_page_title(context,**pageargs):
 def render_main_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        form = context.get('form', UNDEFINED)
-        prescriber = context.get('prescriber', UNDEFINED)
         def main_content():
             return render_main_content(context)
-        csrf_input = context.get('csrf_input', UNDEFINED)
+        form = context.get('form', UNDEFINED)
         self = context.get('self', UNDEFINED)
+        prescriber = context.get('prescriber', UNDEFINED)
+        csrf_input = context.get('csrf_input', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n    <section>\n      <div class="container">\n        <div class="row">\n        <div class="col-12">\n          <h1 class="border-bottom mb-4 pb-1" style="border-bottom-style: dotted!important;">\n              Add Perscription for: ')
         __M_writer(django_mako_plus.ExpressionPostProcessor(self)(prescriber.Fname))
         __M_writer(' ')
         __M_writer(django_mako_plus.ExpressionPostProcessor(self)(prescriber.Lname))
-        __M_writer('}\n          </h1>\n        </div>\n\n          <div class="col-12">\n            <div class="well">\n              <form class="oak_contact_form" method="post">\n                ')
+        __M_writer('\n          </h1>\n        </div>\n\n          <div class="col-12">\n            <div class="well">\n              <form class="oak_contact_form" method="post">\n                ')
         __M_writer(django_mako_plus.ExpressionPostProcessor(self)( csrf_input ))
         __M_writer('\n                <div class="row">\n                  <div class="col-lg-6 col-12 form-group">\n                    <label>Perscriber</label>\n                    <h5>\n                      ')
         __M_writer(django_mako_plus.ExpressionPostProcessor(self)(prescriber.Fname))

@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'kd@)7i1ytsvwnt^e_1rm%#4ccopklie1fv2nnnw#0ng)+*ewmx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.opioid-data.org']
 
 AUTH_USER_MODEL = 'account.User'
 # Application definition
@@ -91,11 +91,11 @@ WSGI_APPLICATION = 'intex.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME':  'intex',
-        'USER': 'ericbeecher1',
-        'PASSWORD': 'ericrocks',
-        'HOST': 'localhost',
-        'PORT': ''
+        'NAME':  'postgres',
+        'USER': 'ericbeecher1@intexdb',
+        'PASSWORD': 'Password1',
+        'HOST': 'intexdb.postgres.database.azure.com',
+        'PORT': '5432'
     }
 }
 
@@ -162,7 +162,7 @@ LOGGING = {
     'loggers': {
         'django_mako_plus': {
             'handlers': ['django_mako_plus_console'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': False,
         },
     },

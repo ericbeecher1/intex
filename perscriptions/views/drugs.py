@@ -1,12 +1,11 @@
 from django.conf import settings
 from django_mako_plus import view_function, jscontext
-import csv
 from perscriptions import models as pmod
+from django.contrib.auth.decorators import login_required
 
 
 
-
-
+@login_required(login_url='/account/')
 @view_function
 def process_request(request):
     drugs = pmod.Drug.objects.all()
@@ -16,6 +15,7 @@ def process_request(request):
     }
     return request.dmp.render('drugs.html', context)
 
+@login_required(login_url='/account/')
 @view_function
 def details(request, drug:pmod.Drug=None):
     context = {

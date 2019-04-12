@@ -5,9 +5,9 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1554934966.629496
+_modified_time = 1554939687.012322
 _enable_loop = True
-_template_filename = '/Users/ericbeecher1/Documents/W19/intex_2/intex/homepage/templates/base.htm'
+_template_filename = '/Users/ericbeecher1/intex/homepage/templates/base.htm'
 _template_uri = 'base.htm'
 _source_encoding = 'utf-8'
 import django_mako_plus
@@ -19,14 +19,14 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
-        STATIC_URL = context.get('STATIC_URL', UNDEFINED)
         csrf_input = context.get('csrf_input', UNDEFINED)
         self = context.get('self', UNDEFINED)
+        STATIC_URL = context.get('STATIC_URL', UNDEFINED)
         def main_content():
             return render_main_content(context._locals(__M_locals))
+        request = context.get('request', UNDEFINED)
         def page_title():
             return render_page_title(context._locals(__M_locals))
-        request = context.get('request', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('<!DOCTYPE html>\n\n<html lang="en">\n    <head>\n\n        <meta charset="utf-8">\n        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">\n\n    \t\t<title>')
         if 'parent' not in context._data or not hasattr(context._data['parent'], 'page_title'):
@@ -35,7 +35,7 @@ def render_body(context,**pageargs):
 
         __M_writer('</title>\n\n        <link rel="shortcut icon" href="')
         __M_writer(django_mako_plus.ExpressionPostProcessor(self)( STATIC_URL ))
-        __M_writer('homepage/media/python.png">\n\n        <!-- REQ: Bootstrap 4.x -->\n        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">\n\n\n        <!-- Font Awesome -->\n        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-6jHF7Z3XI3fF4XZixAuSu0gGKrXwoX/w3uFPxC56OtjChio7wtTGJWRW53Nhx6Ev" crossorigin="anonymous">\n\n        <!-- REQ: Jquery 3.3.x -->\n        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>\n\n        <!-- REQ: Bootstrap 4.x -->\n        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>\n        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>\n\n        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">\n\n        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>\n        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>\n\n\n\n        <script src="/django_mako_plus/dmp-common.min.js"></script>\n        ')
+        __M_writer('homepage/media/python.png">\n\n        <!-- REQ: Bootstrap 4.x -->\n        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">\n\n\n        <!-- Font Awesome -->\n        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">\n\n        <!-- REQ: Jquery 3.3.x -->\n        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>\n\n        <!-- REQ: Bootstrap 4.x -->\n        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>\n        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>\n\n        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">\n\n        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>\n        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>\n\n\n\n        <script src="/django_mako_plus/dmp-common.min.js"></script>\n        ')
         __M_writer(django_mako_plus.ExpressionPostProcessor(self)( django_mako_plus.links(self) ))
         __M_writer('\n\n\n\n\n\n\t</head>\n\n\t<body class="h-dark h-solid h-sticky h-nav-content-bottom h-show-icon-group">\n\n        <header>\n            <!-- header -->\n            <div class="container header-container">\n\n                <div class="header-search row">\n                    <form action="/perscriptions/search" method="post">\n                      ')
         __M_writer(django_mako_plus.ExpressionPostProcessor(self)( csrf_input ))
@@ -93,6 +93,6 @@ def render_main_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"filename": "/Users/ericbeecher1/Documents/W19/intex_2/intex/homepage/templates/base.htm", "uri": "base.htm", "source_encoding": "utf-8", "line_map": {"18": 0, "31": 1, "36": 9, "37": 11, "38": 11, "39": 35, "40": 35, "41": 51, "42": 51, "43": 66, "44": 66, "45": 67, "46": 67, "47": 76, "48": 77, "49": 79, "50": 80, "51": 82, "52": 85, "53": 86, "54": 90, "55": 91, "56": 93, "57": 94, "58": 95, "59": 99, "60": 102, "65": 113, "71": 9, "82": 111, "88": 111, "94": 88}}
+{"filename": "/Users/ericbeecher1/intex/homepage/templates/base.htm", "uri": "base.htm", "source_encoding": "utf-8", "line_map": {"18": 0, "31": 1, "36": 9, "37": 11, "38": 11, "39": 35, "40": 35, "41": 51, "42": 51, "43": 66, "44": 66, "45": 67, "46": 67, "47": 76, "48": 77, "49": 79, "50": 80, "51": 82, "52": 85, "53": 86, "54": 90, "55": 91, "56": 93, "57": 94, "58": 95, "59": 99, "60": 102, "65": 113, "71": 9, "82": 111, "88": 111, "94": 88}}
 __M_END_METADATA
 """

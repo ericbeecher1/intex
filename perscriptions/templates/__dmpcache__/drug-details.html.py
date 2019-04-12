@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1554920327.583138
+_modified_time = 1555026544.630837
 _enable_loop = True
 _template_filename = '/Users/ericbeecher1/intex/perscriptions/templates/drug-details.html'
 _template_uri = 'drug-details.html'
@@ -30,11 +30,12 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
-        self = context.get('self', UNDEFINED)
+        set = context.get('set', UNDEFINED)
         def main_content():
             return render_main_content(context._locals(__M_locals))
-        drug = context.get('drug', UNDEFINED)
+        self = context.get('self', UNDEFINED)
         request = context.get('request', UNDEFINED)
+        drug = context.get('drug', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n\n')
         if 'parent' not in context._data or not hasattr(context._data['parent'], 'main_content'):
@@ -50,11 +51,12 @@ def render_body(context,**pageargs):
 def render_main_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        self = context.get('self', UNDEFINED)
+        set = context.get('set', UNDEFINED)
         def main_content():
             return render_main_content(context)
-        drug = context.get('drug', UNDEFINED)
+        self = context.get('self', UNDEFINED)
         request = context.get('request', UNDEFINED)
+        drug = context.get('drug', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n    <section>\n      <div class="container">\n        <div class="row">\n          <div class="col-12">\n            <h1 class="border-bottom mb-4 pb-1" style="border-bottom-style: dotted!important;">  ')
         __M_writer(django_mako_plus.ExpressionPostProcessor(self)(drug.DrugName.capitalize()))
@@ -96,7 +98,32 @@ def render_main_content(context,**pageargs):
             __M_writer('\n                    </td>\n                    <td>\n                      ')
             __M_writer(django_mako_plus.ExpressionPostProcessor(self)(prescription.Prescriber.Specialty))
             __M_writer('\n                    </td>\n                  </tr>\n\n')
-        __M_writer('              </tbody>\n            </table>\n          </div>\n        </div>\n      </div>\n    </section>\n')
+        __M_writer('              </tbody>\n            </table>\n          </div>\n')
+        if drug.isOpioid :
+            __M_writer('          <div class="col-12">\n            ')
+
+            if drug.isOpioid :
+                similar_drugs = drug.get_similar_drugs()
+            else:
+                similar_drugs = set()
+            
+            
+            __M_writer('\n\n            <h3>Similar Drugs</h3>\n            <table class="datatable table table-striped table-bordered no-footer">\n              <thead>\n                <tr>\n                  <th class="nosort" style="width: 30px">\n\n                  </th>\n                  <th>\n                    Drug Name\n                  </th>\n                  <th class="nosort" style="text-align: center">\n                    Action\n                  </th>\n                </tr>\n\n              </thead>\n              <tbody>\n')
+            for similar_drug in similar_drugs:
+                __M_writer('                  <tr>\n                    <td class="text-center">\n')
+                if similar_drug.isOpioid:
+                    __M_writer('                        <i class="fas fa-capsules" data-toggle="tooltip" title="')
+                    __M_writer(django_mako_plus.ExpressionPostProcessor(self)(similar_drug.DrugName.capitalize()))
+                    __M_writer(' is an Opioid"></i>\n')
+                __M_writer('                    </td>\n                    <td class="text-capitalize">\n                      <a href="/perscriptions/drugs.details/')
+                __M_writer(django_mako_plus.ExpressionPostProcessor(self)(similar_drug.id))
+                __M_writer('">')
+                __M_writer(django_mako_plus.ExpressionPostProcessor(self)(similar_drug.DrugName.lower()))
+                __M_writer('</a>\n                    </td>\n                    <td class="actions_cell">\n                      <a href="/perscriptions/drugs.details/')
+                __M_writer(django_mako_plus.ExpressionPostProcessor(self)(similar_drug.id))
+                __M_writer('" class="btn btn-light btn-sm"><i class="fas fa-eye"></i></a>\n                    </td>\n                  </tr>\n\n')
+            __M_writer('              </tbody>\n            </table>\n          </div>\n')
+        __M_writer('\n        </div>\n      </div>\n    </section>\n')
         return ''
     finally:
         context.caller_stack._pop_frame()
@@ -104,6 +131,6 @@ def render_main_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"filename": "/Users/ericbeecher1/intex/perscriptions/templates/drug-details.html", "uri": "drug-details.html", "source_encoding": "utf-8", "line_map": {"29": 0, "39": 1, "44": 90, "50": 3, "59": 3, "60": 8, "61": 8, "62": 18, "63": 18, "64": 26, "65": 27, "66": 28, "67": 29, "68": 31, "69": 36, "70": 36, "71": 43, "72": 44, "73": 47, "74": 48, "75": 52, "76": 62, "77": 63, "78": 65, "79": 65, "80": 68, "81": 69, "82": 69, "83": 69, "84": 69, "85": 69, "86": 69, "87": 69, "88": 70, "89": 71, "90": 71, "91": 71, "92": 71, "93": 71, "94": 73, "95": 76, "96": 76, "97": 79, "98": 79, "99": 84, "105": 99}}
+{"filename": "/Users/ericbeecher1/intex/perscriptions/templates/drug-details.html", "uri": "drug-details.html", "source_encoding": "utf-8", "line_map": {"29": 0, "40": 1, "45": 137, "51": 3, "61": 3, "62": 8, "63": 8, "64": 18, "65": 18, "66": 26, "67": 27, "68": 28, "69": 29, "70": 31, "71": 36, "72": 36, "73": 43, "74": 44, "75": 47, "76": 48, "77": 52, "78": 62, "79": 63, "80": 65, "81": 65, "82": 68, "83": 69, "84": 69, "85": 69, "86": 69, "87": 69, "88": 69, "89": 69, "90": 70, "91": 71, "92": 71, "93": 71, "94": 71, "95": 71, "96": 73, "97": 76, "98": 76, "99": 79, "100": 79, "101": 84, "102": 87, "103": 88, "104": 89, "111": 94, "112": 113, "113": 114, "114": 116, "115": 117, "116": 117, "117": 117, "118": 119, "119": 121, "120": 121, "121": 121, "122": 121, "123": 124, "124": 124, "125": 129, "126": 133, "132": 126}}
 __M_END_METADATA
 """

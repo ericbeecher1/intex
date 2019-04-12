@@ -84,6 +84,53 @@
               </tbody>
             </table>
           </div>
+          %if drug.isOpioid :
+          <div class="col-12">
+            <%
+            if drug.isOpioid :
+                similar_drugs = drug.get_similar_drugs()
+            else:
+                similar_drugs = set()
+            %>
+
+            <h3>Similar Drugs</h3>
+            <table class="datatable table table-striped table-bordered no-footer">
+              <thead>
+                <tr>
+                  <th class="nosort" style="width: 30px">
+
+                  </th>
+                  <th>
+                    Drug Name
+                  </th>
+                  <th class="nosort" style="text-align: center">
+                    Action
+                  </th>
+                </tr>
+
+              </thead>
+              <tbody>
+                %for similar_drug in similar_drugs:
+                  <tr>
+                    <td class="text-center">
+                      %if similar_drug.isOpioid:
+                        <i class="fas fa-capsules" data-toggle="tooltip" title="${similar_drug.DrugName.capitalize()} is an Opioid"></i>
+                      %endif
+                    </td>
+                    <td class="text-capitalize">
+                      <a href="/perscriptions/drugs.details/${similar_drug.id}">${similar_drug.DrugName.lower()}</a>
+                    </td>
+                    <td class="actions_cell">
+                      <a href="/perscriptions/drugs.details/${similar_drug.id}" class="btn btn-light btn-sm"><i class="fas fa-eye"></i></a>
+                    </td>
+                  </tr>
+
+                %endfor
+              </tbody>
+            </table>
+          </div>
+          %endif
+
         </div>
       </div>
     </section>
